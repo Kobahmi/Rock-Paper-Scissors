@@ -4,15 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Rock Paper Scissors
-    </title>
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-   <div class="flex-container">
-       <h1>Rock Paper Scissors</h1>
-       <button onclick="game()">Start Game</button>
-   </div>
+ <div class="flex-container">
+    <div class="title"><h1>Rock Paper Scissors</h1></div>
+    
+   <h3>Player: <span id="player-choice"></span></h3>
+    <div class="Score1">Score: <span id="playerScore"></span></div>
+  <div class="img-container1">
+    <img src="./images/rock.png" alt="Rock" class="pImg" id="rock">
+    <img src="./images/paper.png" alt="Paper" class="pImg" id="paper">
+    <img src="./images/scissors.png" alt="Scissors" class="pImg" id="scissors">
+  </div>
+
+
+   <h3>Computer: <span id="computer-choice"></span></h3>
+    <div class = "Score2">Score: <span id="computerScore"></span></div>
+  <div class="img-container2">
+    <img src="./images/rock.png" alt="Rock" class="butt">
+    <img src="./images/paper.png" alt="Paper" class="butt">
+    <img src="./images/scissors.png" alt="Scissors" class="butt">
+  </div>  
+
+    <h2>Result:<span id= "result"></span></h2>
+    <h1><span id="winner"></span></h1>
+    <button id="restart" class="disable">Restart?</div> 
+
+</div>      
+
 </body>
-<script src="script.js" charset="utf-8"></script> 
 </html>

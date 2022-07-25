@@ -1,0 +1,39 @@
+img {
+    height: 150px;
+    width: 150px;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#restart {
+    padding: 5px;
+    background-color: rgb(224, 196, 250);
+}
+
+.disable {
+    display: none;
+}
+
+.active {
+    display: flex;
+    }
+
+body {
+    background-color: bisque;
+}
+
+#winner {
+    color: red
+}
+
+.disabled-button {
+    cursor: default;
+    transform: none;
+}
