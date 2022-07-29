@@ -1,114 +1,105 @@
-//spans first!
-const computerChoiceDisplay = document.getElementById("computer-choice")
-const playerChoiceDisplay = document.getElementById("player-choice")
-const resultDisplay = document.getElementById("result")
-const computerScore = document.getElementById("computerScore")
-const playerScore = document.getElementById("playerScore")
-const winnerDisplay = document.getElementById("winner")
-const restartDisplay = document.getElementById("restart")
+const restartDisplay = document.querySelector("#restart")
+const resultDisplay = document.querySelector("#result")
+const displayPlayerChoice = document.querySelector("#player-choice")
+const displayComputerChoice = document.querySelector("#computer-choice")
+const displayPlayerScore = document.querySelector("#playerScore")
+const displayComputerScore = document.querySelector("#computerScore")
+const rockBtn = document.querySelector("#rock")
+const paperBtn = document.querySelector("#paper")
+const scissorsBtn = document.querySelector("#scissors")
+const computerSelect = document.querySelector(".butt")
+
+const choices = ["rock", "paper", "scissors"]
+
 let userChoice
+let userScore = 0
 let computerChoice
-let result
-let playerPoint = 0;
-let computerPoint = 0;
+let computerScore = 0
 
 
-//now the possible choices
-const possibleUserChoices = document.querySelectorAll(".pImg")
-const possibleComputerChoices = document.querySelectorAll(".butt")
+rockBtn.addEventListener("click", userPlay) //Player Choice
+paperBtn.addEventListener("click", userPlay)
+scissorsBtn.addEventListener("click", userPlay)
 
-
-//now make the user and computer choices do something!
-possibleUserChoices.forEach(possibleChoice => possibleChoice.addEventListener("click", (e)=>{
-   userChoice = e.target.id
-   playerChoiceDisplay.innerHTML = userChoice;
-//fight computer now that we have our choice
-   MakeComputerChoice()
-//see who wins
-   getResult()
-
-
-   
-   if (
-    (playerPoint === 5 || computerPoint === 5)
-    ) {
-    //display end results
-    //change the button to visible,
-    //change the text to display winner
-    displayEnd();
-  }
-}))
-
-
-function MakeComputerChoice() {//computer chooses randomly and then we associate it with "number===rockpaper or scissors"
-    const choice = Math.floor(Math.random()*possibleComputerChoices.length)
-  
-    if (choice === 0){
-        computerChoice = "rock"
+function userPlay(e) {
+if (e.target.id == "rock") {
+    displayPlayerChoice.innerHTML = "rock"
+    playRound("rock")
+} else if (
+    e.target.id == "paper") {
+    displayPlayerChoice.innerHTML = "paper"
+    playRound("paper")
+} else if (
+    e.target.id == "scissors") {
+    displayPlayerChoice.innerHTML = "scissors"
+    playRound("scissors")
     }
-    if (choice === 1){
-        computerChoice = "paper"
-    }
-    if (choice === 2){
-        computerChoice = "scissors"
-    }
+}
 
-    computerChoiceDisplay.innerHTML = computerChoice
-    }
 
-//game rules!
-function getResult(){
+function computerPlay() { //Computer choice
+    choice = choices[Math.floor(Math.random() * choices.length)];
+    displayComputerChoice.innerHTML = choice;
+    return choice;
+}
+
+
+function playRound(pick) { //Game starts after player makes choice. First to score 5 wins
+computerChoice = computerPlay();
+
+checkRules(pick, computerChoice)
+
+if (userScore === 5) {
+resultDisplay.textContent = " You won vs the computer!"
+rockBtn.disabled = true;
+paperBtn.disabled = true;
+scissorsBtn.disabled = true;
+restartDisplay.classList.remove("disable")
+}
+
+else if (computerScore === 5) {
+resultDisplay.textContent = " You lost vs the computer!"
+rockBtn.disabled = true;
+paperBtn.disabled = true;
+scissorsBtn.disabled = true;
+restartDisplay.classList.remove("disable")
+}
+}
+
+
+function checkRules(userChoice, computerChoice) { //Rules of the game
     if (userChoice === computerChoice) {
-        result = "Tie!";
-    }
-    else if (
-        (userChoice === "rock" && computerChoice === "scissors") ||
-        (userChoice === "paper" && computerChoice === "rock") ||
-        (userChoice === "scissors" && computerChoice === "paper")
-       ) 
-    { 
-        playerPoint += 1;
-        result = "You win!";
-    } else { 
-        computerPoint += 1;
-        result = "You lose!";
-    }
-
-    if (playerPoint > 5 || computerPoint > 5) {
-        return;
-    }
-    playerScore.innerHTML = playerPoint
-    computerScore.innerHTML = computerPoint
-    resultDisplay.innerHTML = result
+        resultDisplay.innerHTML = " Tie!"
+    } else if (
+        (userChoice === "rock" && computerChoice === "scissors" ||
+        userChoice === "paper" && computerChoice === "rock" ||
+        userChoice === "scissors" && computerChoice === "paper")) {
+            userScore++
+            displayPlayerScore.innerHTML = userScore
+            resultDisplay.innerHTML = " You win!"
+    } else {
+            computerScore++
+            displayComputerScore.innerHTML = computerScore
+            resultDisplay.innerHTML = " You lose!"
+        }
 }
 
 
-//show winner
-function displayEnd(){
-if (playerPoint === 5) {
-    winnerDisplay.textContent = "You won THE GAME!!"
-}
-if (computerPoint === 5) {
-    winnerDisplay.textContent = "You lose the GAME!!"
-};
-//MAKE RESTART APPEAR 
-restartDisplay.classList.remove("disable");
+//Make restart button restart the game by reloading the page instead
+//restartDisplay.addEventListener("click", () => {
+//window.location.reload()})
 
-//Stop player from playing more than 5 times  
-possibleUserChoices.forEach(possibleChoice => possibleChoice.removeEventListener("click", (e)=>{
-    userChoice = e.target.id
-    playerChoiceDisplay.innerHTML = userChoice
-}))
-
-}
-
-
-
-
-//Make restart button restart the game
-restartDisplay.addEventListener("click", () =>{
-window.location.reload();
-}
-)
-
+restartDisplay.addEventListener("click", () => { //Full reset without reloading page
+userScore = 0
+computerScore = 0
+displayComputerScore.innerHTML = "0"
+displayPlayerScore.innerHTML = "0"
+displayComputerChoice.innerHTML = ""
+displayPlayerChoice.innerHTML = ""
+resultDisplay.innerHTML = ""
+rockBtn.disabled = false;
+paperBtn.disabled = false;
+scissorsBtn.disabled = false;
+restartDisplay.classList.add("disable")
+})
 
